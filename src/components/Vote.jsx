@@ -2,6 +2,7 @@ import { db } from "@/db";
 import auth from "../app/middleware";
 import { revalidatePath } from "next/cache";
 import { VoteButtons } from "./VoteButtons";
+import { redirect } from "next/navigation";
 
 async function getExistingVote(userId, postId) {
   const { rows: existingVotes } = await db.query(
@@ -15,7 +16,7 @@ async function getExistingVote(userId, postId) {
 async function handleVote(userId, postId, newVote) {
   // prevents users without accounts from voting
   if (!userId) {
-    return;
+    redirect("/api/auth/signin");
   }
 
   const existingVote = await getExistingVote(userId, postId);
