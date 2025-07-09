@@ -58,7 +58,7 @@ export default async function SinglePostPage({ params }) {
         </main>
       </section>
 
-      <section className="bg-zinc-50 rounded-2xl p-8 w-full max-w-[80%]">
+      <section className="bg-zinc-100/50 rounded-2xl p-8 w-full max-w-[80%]">
         <CommentForm postId={post.id} />
         <CommentList postId={post.id} />
       </section>
