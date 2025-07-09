@@ -9,7 +9,7 @@ export async function Pagination({ currentPage = 1 }) {
   const numOfPages = Math.ceil(count / POSTS_PER_PAGE);
 
   return (
-    <ul className="flex w-1/2 mx-auto space-x-3 text-2xl">
+    <ul className="flex w-fit text-2xl justify-center mb-8 rounded-full p-1 px-3 bg-zinc-200/50">
       {currentPage > 1 && (
         <li>
           <a
@@ -24,7 +24,7 @@ export async function Pagination({ currentPage = 1 }) {
         <li key={index} className="items-center flex">
           <a
             href={index > 0 ? `/page/${index + 1}` : `/`}
-            className={clsx(` hover:bg-zinc-800 `, {
+            className={clsx(`hover:brightness-75 p-1`, {
               "text-pink-400": currentPage === index + 1,
             })}
           >

@@ -2,6 +2,7 @@ import { CommentForm } from "@/components/CommentForm";
 import { CommentList } from "@/components/CommentList";
 import { Vote } from "@/components/Vote";
 import { db } from "@/db";
+import Image from "next/image";
 
 export async function generateMetadata({ params }, parent) {
   const { postId } = await params;
@@ -26,13 +27,13 @@ export default async function SinglePostPage({ params }) {
   const postId = params.postId;
 
   const { rows: posts } = await db.query(
-    `SELECT posts.id, posts.title, posts.body, posts.created_at, users.name, 
+    `SELECT posts.id, posts.title, posts.body, posts.created_at, users.name, users.image,
     COALESCE(SUM(votes.vote), 0) AS vote_total
     FROM posts
     JOIN users ON posts.user_id = users.id
     LEFT JOIN votes ON votes.post_id = posts.id
     WHERE posts.id = $1
-    GROUP BY posts.id, users.name
+    GROUP BY posts.id, users.name, users.image
     LIMIT 1;`,
     [postId]
   );
@@ -50,7 +51,19 @@ export default async function SinglePostPage({ params }) {
           <Vote postId={post.id} votes={post.vote_total} />
           <div className="">
             <h1 className="text-2xl font-semibold">{post.title}</h1>
-            <p className="text-zinc-400 mb-4">Posted by {post.name}</p>
+            <p className="text-zinc-400 mb-4 flex items-center gap-1">
+              Posted by{" "}
+              <span className="flex items-center gap-1">
+                <Image
+                  src={post.image}
+                  alt={""}
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+                />
+                {post.name}
+              </span>
+            </p>
           </div>
         </div>
         <main className="whitespace-pre-wrap m-4 p-4 rounded-md bg-zinc-300/75">

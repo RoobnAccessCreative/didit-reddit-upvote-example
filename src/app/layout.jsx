@@ -37,7 +37,7 @@ export default async function RootLayout({ children }) {
       <body className={body.className}>
         <Providers>
           <header
-            className={`border-b border-zinc-200 p-4 flex items-center shadow-lg sticky top-0  bg-opacity-65 backdrop-blur-sm`}
+            className={`border-b border-zinc-200 p-4 flex items-center shadow-lg sticky top-0  bg-opacity-65 backdrop-blur-sm h-[10dvh]`}
           >
             <Link href="/" className="text-xl ">
               Didit
@@ -52,7 +52,9 @@ export default async function RootLayout({ children }) {
               <UserInfo />
             </div>
           </header>
-          <main className={`main max-w-screen-xl lg:mx-auto`}>{children}</main>
+          <main className={`main max-w-screen-xl lg:mx-auto h-[90dvh]`}>
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
