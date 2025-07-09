@@ -13,13 +13,14 @@ async function getExistingVote(userId, postId) {
 }
 
 async function handleVote(userId, postId, newVote) {
-  // Check if the user has already voted on this post
+  // prevents users without accounts from voting
   if (!userId) {
-    throw new Error("Cannot vote without being logged in");
+    return;
   }
 
   const existingVote = await getExistingVote(userId, postId);
 
+  // if user has voted
   if (existingVote) {
     if (existingVote.vote === newVote) {
       // User is toggling their vote, so remove it
