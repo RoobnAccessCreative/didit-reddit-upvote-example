@@ -3,6 +3,25 @@ import { CommentList } from "@/components/CommentList";
 import { Vote } from "@/components/Vote";
 import { db } from "@/db";
 
+export async function generateMetadata({ params }, parent) {
+  const { postId } = await params;
+
+  const { rows: post } = await db.query(
+    "SELECT posts.title FROM posts WHERE posts.id = $1 LIMIT 1",
+    [postId]
+  );
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `${post[0].title} | Didit`,
+    openGraph: {
+      images: ["/some-specific-page-image.jpg", ...previousImages],
+    },
+  };
+}
+
 export default async function SinglePostPage({ params }) {
   const postId = params.postId;
 
@@ -20,8 +39,8 @@ export default async function SinglePostPage({ params }) {
   const post = posts[0];
 
   const { rows: votes } = await db.query(
-    `SELECT *, users.name from votes
-     JOIN users on votes.user_id = users.id`
+    `SELECT *, users.name from votes 
+    JOIN users on votes.user_id = users.id`
   );
 
   return (
