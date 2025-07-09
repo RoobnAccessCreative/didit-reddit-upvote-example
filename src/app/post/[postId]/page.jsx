@@ -44,18 +44,24 @@ export default async function SinglePostPage({ params }) {
   );
 
   return (
-    <div className="max-w-screen-lg mx-auto pt-4 pr-4">
-      <div className="flex space-x-6">
-        <Vote postId={post.id} votes={post.vote_total} />
-        <div className="">
-          <h1 className="text-2xl">{post.title}</h1>
-          <p className="text-zinc-400 mb-4">Posted by {post.name}</p>
+    <div className="max-w-screen-lg mx-auto pt-4 pr-4 flex flex-col items-center">
+      <section className="ml-8 mr-8 mb-4 mt-4 rounded-2xl p-8 bg-zinc-200/75 w-full max-w-[80%]">
+        <div className="flex space-x-6 ">
+          <Vote postId={post.id} votes={post.vote_total} />
+          <div className="">
+            <h1 className="text-2xl font-semibold">{post.title}</h1>
+            <p className="text-zinc-400 mb-4">Posted by {post.name}</p>
+          </div>
         </div>
-      </div>
-      <main className="whitespace-pre-wrap m-4">{post.body}</main>
+        <main className="whitespace-pre-wrap m-4 p-4 rounded-md bg-zinc-300/75">
+          {post.body}
+        </main>
+      </section>
 
-      <CommentForm postId={post.id} />
-      <CommentList postId={post.id} />
+      <section className="bg-zinc-100/50 rounded-2xl p-8 w-full max-w-[80%]">
+        <CommentForm postId={post.id} />
+        <CommentList postId={post.id} />
+      </section>
     </div>
   );
 }
