@@ -1,11 +1,30 @@
-import { Inter } from "next/font/google";
+import { Montserrat, JetBrains_Mono, Norican } from "next/font/google";
 import { UserInfo } from "../components/UserInfo";
 
 import "./globals.css";
 import Link from "next/link";
 import { Providers } from "@/Providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const body = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: "variable",
+  className: "body-text",
+});
+
+const title = Norican({
+  subsets: ["latin"],
+  variable: "--font-title",
+  weight: "400",
+  className: "title-text",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: "variable",
+  className: "mono-text",
+});
 
 export const metadata = {
   title: "Didit",
@@ -15,10 +34,12 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={body.className}>
         <Providers>
-          <header className="border-b border-zinc-200 p-4 flex items-center shadow-lg sticky top-0 bg-white bg-opacity-65 backdrop-blur-sm">
-            <Link href="/" className="text-xl">
+          <header
+            className={`border-b border-zinc-200 p-4 flex items-center shadow-lg sticky top-0  bg-opacity-65 backdrop-blur-sm`}
+          >
+            <Link href="/" className="text-xl ">
               Didit
             </Link>
             <Link
@@ -31,7 +52,7 @@ export default async function RootLayout({ children }) {
               <UserInfo />
             </div>
           </header>
-          <main className="max-w-screen-xl lg:mx-auto">{children}</main>
+          <main className={`main max-w-screen-xl lg:mx-auto`}>{children}</main>
         </Providers>
       </body>
     </html>
